@@ -1,0 +1,131 @@
+<html>
+
+<head>
+    <title>01 - Javascript Trumpet Kit </title>
+</head>
+<style>
+    body {
+        background: url("background_01.jpg");
+        background-size: cover;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        justify-content: space-between;
+        width: 75%;
+        display: flex;
+    }
+
+    li {
+        display: inline-block;
+        font-size: 12px;
+        color: white;
+        border: 5px solid black;
+        background: rgba(44, 62, 80, 0.8);
+        border-radius: 5px;
+        text-align: center;
+        height: 80px;
+        width: 80px;
+        animation-name: press;
+        animation-duration: 1s;
+        transition: all 0.07s;
+    }
+
+    li.pressed {
+        border-color: yellow;
+        transform: scale(1.1);
+        font-weight: bold;
+    }
+
+    .letter {
+        font-size: 25px;
+        margin-bottom: 0;
+        margin-top: 20%;
+    }
+
+    .instrument {
+        color: yellow;
+    }
+</style>
+
+<body>
+    <ul>
+        <li data-key="65">
+            <p class="letter">A</p>
+            <p class="instrument">Saxophone</p>
+        </li>
+        <li data-key="83">
+            <p class="letter">S</p>
+            <p class="instrument">Bass Clarinet</p>
+        </li>
+        <li data-key="68">
+            <p class="letter">D</p>
+            <p class="instrument">Bassoon</p>
+        </li>
+        <li data-key="70">
+            <p class="letter">F</p>
+            <p class="instrument">Cello</p>
+        </li>
+        <li data-key="71">
+            <p class="letter">G</p>
+            <p class="instrument">Clarinet</p>
+        </li>
+        <li data-key="72">
+            <p class="letter">H</p>
+            <p class="instrument">Contra Bassoon</p>
+        </li>
+        <li data-key="74">
+            <p class="letter">J</p>
+            <p class="instrument">Double Bass</p>
+        </li>
+        <li data-key="75">
+            <p class="letter">K</p>
+            <p class="instrument">English Horn</p>
+        </li>
+        <li data-key="76">
+            <p class="letter">L</p>
+            <p class="instrument">Flute</p>
+        </li>
+    </ul>
+    <audio data-key="65" src="sounds/alto-saxophone.mp3"></audio>
+    <audio data-key="83" src="sounds/bass-clarinet.mp3"></audio>
+    <audio data-key="68" src="sounds/bassoon.mp3"></audio>
+    <audio data-key="70" src="sounds/cello.mp3"></audio>
+    <audio data-key="71" src="sounds/clarinet.mp3"></audio>
+    <audio data-key="72" src="sounds/contra-bassoon.mp3"></audio>
+    <audio data-key="74" src="sounds/double-bass.mp3"></audio>
+    <audio data-key="75" src="sounds/english-horn.mp3"></audio>
+    <audio data-key="76" src="sounds/flute.mp3"></audio>
+    
+    <script>
+        // keycode.info
+        function play(event) {
+            const audioElem = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+            const liElem = document.querySelector(`li[data-key="${event.keyCode}"]`);
+            if (!audioElem) return //stop the function from running
+            audioElem.currentTime = 0; // setting this value seeks the media to the new time.
+            audioElem.play();
+            liElem.classList.add('pressed');
+            // key.classList.remove('pressed');
+            // key.classList.toggle('pressed');
+        }
+        function removeClass(event) {
+            if (event.propertyName === "transform") {
+                this.classList.remove('pressed');
+            }
+            // or if (event.propertyName !== "transform") return;
+            // this.classList.remove('pressed');
+        }
+
+        document.querySelectorAll('li').forEach(li => li.addEventListener('transitionend', removeClass));
+        document.addEventListener('keydown', play);
+    </script>
+</body>
+
+</html>

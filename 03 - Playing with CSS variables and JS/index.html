@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <title> 03 - Playing with CSS Variables and JS </title>
+</head>
+<style>
+     :root {
+        --base: rgb(57, 123, 180);
+        --spacing: 50px;
+        --blur: 0px;
+    }
+    
+    body {
+        margin: 0;
+        margin-top: 10px;
+        background: url("background_03.jpg") no-repeat center;
+        background-size: cover;
+        text-align: center;
+        min-height: 100%;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #fff;
+        font-size: 3rem;
+    }
+    
+    .controls-wrapper {
+        font-size: 0;
+        margin-top: 40px;
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #000;
+    }
+    
+    .control {
+        display: inline-block;
+        width: 33.3333%;
+        font-size: 1.5rem;
+        color: #fff;
+    }
+    
+    .control>label {
+        margin-right: 10px;
+    }
+    
+    .control>input[type=range] {
+        position: relative;
+        top: 5px;
+    }
+    
+    img {
+        margin-top: 50px;
+        padding: var(--spacing);
+        background: var(--base);
+        max-width: 300px;
+        filter: blur(var(--blur));
+    }
+    
+    .highlight {
+        color: var(--base);
+    }
+</style>
+
+<body>
+    <h1> Update CSS Variables with <span class="highlight">JS</span> </h1>
+    <section class="controls-wrapper">
+        <div class="control control__spacing">
+            <label for="spacing"> Spacing</label>
+            <input name="spacing" type="range" max="100" min="0" id="spacing" value="50" data-suffix="px"></input>
+        </div>
+        <div class="control control__blur">
+            <label for="blur"> Blur</label>
+            <input name="blur" type="range" max="20" min="0" id="blur" value="0" data-suffix="px"></input>
+        </div>
+        <div class="control control__baseColor">
+            <label for="base"> Base Color</label>
+            <input name="base" type="color" id="color" value="#ff00ff"></input>
+        </div>
+    </section>
+    <img src="image_03.jpg" alt="Image" />
+</body>
+<!-- <script src="practice.js"></script> -->
+<script>
+
+    document.querySelectorAll(".control input").forEach(input => input.addEventListener("input", handleUpdate));
+    document.getElementById("color").addEventListener("change", handleUpdate);
+
+    function handleUpdate(){
+        // console.log(this.value);
+        // data attribute is an attribute that you made up and you put data -
+        // dataset is an object that will contain all data attributes from that specific element
+        const suffix = this.dataset.suffix || '';
+        document.documentElement.style.setProperty(`--${this.name}`, `${this.value}${suffix}`)
+    }
+</script>
+
+</html>
